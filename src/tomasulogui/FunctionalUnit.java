@@ -1,31 +1,34 @@
 package tomasulogui;
 
 public abstract class FunctionalUnit {
-  PipelineSimulator simulator;
-  ReservationStation[] stations = new ReservationStation[2];
-  
-  public FunctionalUnit(PipelineSimulator sim) {
-    simulator = sim;
-    
-  }
+    PipelineSimulator simulator;
+    ReservationStation[] stations = new ReservationStation[2];
 
- 
-  public void squashAll() {
-    // todo fill in
-  }
+    // Custom Fields
+    int currentCycle = 1;
 
-  public abstract int calculateResult(int station);
+    public FunctionalUnit(PipelineSimulator sim) {
+        simulator = sim;
 
-  public abstract int getExecCycles();
-
-  public void execCycle(CDB cdb) {
-    //todo - start executing, ask for CDB, etc.
-  }
+    }
 
 
+    public void squashAll() {
+        // todo fill in
+    }
 
-  public void acceptIssue(IssuedInst inst) {
-  // todo - fill in reservation station (if available) with data from inst
-  }
+    public abstract int calculateResult(int station);
+
+    public abstract int getExecCycles();
+
+    public void execCycle(CDB cdb) {
+      //todo - start executing, ask for CDB, etc.
+    }
+
+
+    public void acceptIssue(IssuedInst inst) {
+      // todo - fill in reservation station (if available) with data from inst
+
+    }
 
 }

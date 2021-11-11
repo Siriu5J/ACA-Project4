@@ -9,6 +9,7 @@ public class IntDivide extends FunctionalUnit {
     }
 
     public int calculateResult(int station) {
+        // station should always be zero
         int result = 0;
         return result;
     }

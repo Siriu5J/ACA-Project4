@@ -301,7 +301,7 @@ public class PipelineSimulator {
 
         divider.execCycle(cdb);
         multiplier.execCycle(cdb);
-        alu.execCycle(cdb);
+        alu.execCycle(cdb); // This is adder and subtract unit
         branchUnit.execCycle(cdb);
         loader.execCycle(cdb);
 
