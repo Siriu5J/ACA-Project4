@@ -8,7 +8,6 @@ public class IssueUnit {
     IssuedInst issuee;
     Object fu;
     EXEC_TYPE instType;
-    int pc;
 
     public IssueUnit(PipelineSimulator sim) {
       simulator = sim;
@@ -73,7 +72,7 @@ public class IssueUnit {
     }
     
     public void createIssuedInst() {
-        Instruction i = simulator.memory.getInstAtAddr(pc);
+        Instruction i = simulator.memory.getInstAtAddr(simulator.getPC());
         issuee = IssuedInst.createIssuedInst(i);
         IssuedInst.INST_TYPE opcode = issuee.getOpcode();
         if(isLoad(opcode)){
@@ -97,7 +96,8 @@ public class IssueUnit {
         else if(isAlu(opcode)){
             instType = EXEC_TYPE.ALU;
         }
-        pc+=4;
+        issuee.setPC(simulator.getPC());
+        simulator.pc.incrPC();
         //Need to parse as much as posssible for this issuedInst
     }
 
@@ -110,37 +110,70 @@ public class IssueUnit {
                     // TODO: snoop cdb for any needed values
                 }
                 else{
-                    pc-=4;
+                    simulator.pc.pc-=4;
                 }
                 break;
             case LOAD:
                 if(simulator.loader.isReservationStationAvail()&&!simulator.reorder.isFull()){
                     simulator.reorder.updateInstForIssue(issuee);
-                    // TODO: snoop cdb for any needed values
+                    //if(simulator.cdb.getDataValid())
+                    // snoop cdb for any needed values
+                    if (!issuee.getRegSrc1Valid()) {
+                        if (simulator.cdb.getDataValid() && simulator.cdb.getDataTag() == issuee.regSrc1Tag) {
+                            issuee.regSrc1 = simulator.cdb.getDataValue();
+                            issuee.regSrc1Valid = true;
+                        }
+                    }
                     simulator.loader.acceptIssue(issuee);
                 }
                 else{
-                    pc-=4;
+                    simulator.pc.pc-=4;
                 }
                 break;
             case ALU:
                 if(simulator.alu.isReservationStationAvail()&&!simulator.reorder.isFull()){
                     simulator.reorder.updateInstForIssue(issuee);
-                    // TODO: snoop cdb for any needed values
+                    // snoop cdb for any needed values
+                    if (!issuee.getRegSrc1Valid()) {
+                        if (simulator.cdb.getDataValid() && simulator.cdb.getDataTag() == issuee.regSrc1Tag) {
+                            issuee.regSrc1 = simulator.cdb.getDataValue();
+                            issuee.regSrc1Valid = true;
+                        }
+                    }
+
+                    if (!issuee.getRegSrc2Valid()) {
+                        if (simulator.cdb.getDataValid() && simulator.cdb.getDataTag() == issuee.regSrc2Tag) {
+                            issuee.regSrc2 = simulator.cdb.getDataValue();
+                            issuee.regSrc2Valid = true;
+                        }
+                    }
                     simulator.alu.acceptIssue(issuee);
                 }
                 else{
-                    pc-=4;
+                    simulator.pc.pc-=4;
                 }
                 break;
             case MULT:
                 if(simulator.multiplier.isReservationStationAvail()&&!simulator.reorder.isFull()){
                     simulator.reorder.updateInstForIssue(issuee);
-                    // TODO: snoop cdb for any needed values
+                    // snoop cdb for any needed values
+                    if (!issuee.getRegSrc1Valid()) {
+                        if (simulator.cdb.getDataValid() && simulator.cdb.getDataTag() == issuee.regSrc1Tag) {
+                            issuee.regSrc1 = simulator.cdb.getDataValue();
+                            issuee.regSrc1Valid = true;
+                        }
+                    }
+
+                    if (!issuee.getRegSrc2Valid()) {
+                        if (simulator.cdb.getDataValid() && simulator.cdb.getDataTag() == issuee.regSrc2Tag) {
+                            issuee.regSrc2 = simulator.cdb.getDataValue();
+                            issuee.regSrc2Valid = true;
+                        }
+                    }
                     simulator.multiplier.acceptIssue(issuee);
                 }
                 else{
-                    pc-=4;
+                    simulator.pc.pc-=4;
                 }
                 break;
             case DIV:
