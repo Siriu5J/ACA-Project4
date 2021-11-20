@@ -1,5 +1,7 @@
 package tomasulogui;
 
+import java.util.Arrays;
+
 public abstract class FunctionalUnit {
     PipelineSimulator simulator;
     ReservationStation[] stations = new ReservationStation[2];
@@ -19,10 +21,7 @@ public abstract class FunctionalUnit {
 
     public void squashAll() {
         // todo fill in
-        for (int i = 0; i < stations.length; i++) {
-            stations[i] = null;
-        }
-
+        Arrays.fill(stations, null);
     }
 
     public abstract int calculateResult(int station);
@@ -55,7 +54,7 @@ public abstract class FunctionalUnit {
         // Execute if not stuck
         if (!requestWriteback) {
             // If we are still "executing", we just increment counter
-            if (stations[0].isReady()) {
+            if (stations[0] != null && stations[0].isReady()) {
                 if (isExecuting()) {
                     currentCycle++;
                 }
@@ -70,9 +69,9 @@ public abstract class FunctionalUnit {
 
         // Snoop
         if (cdb.getDataValid()) {
-            for (int i = 0; i < stations.length; i++) {
-                if (stations[i] != null) {
-                    stations[i].snoop(cdb);
+            for (ReservationStation station : stations) {
+                if (station != null) {
+                    station.snoop(cdb);
                 }
             }
         }
