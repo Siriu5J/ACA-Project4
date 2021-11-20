@@ -9,9 +9,9 @@ public abstract class FunctionalUnit {
     // Custom Fields
     int currentCycle = 1;
     int writeData = -1;
+    int writeTag = -1;
     boolean requestWriteback = false;
     boolean canWriteback = false;
-    boolean stuck = false;
 
     public FunctionalUnit(PipelineSimulator sim) {
         simulator = sim;
@@ -30,8 +30,6 @@ public abstract class FunctionalUnit {
 
     private boolean isExecuting() {
         if (currentCycle == getExecCycles()) {
-            // Reset count if executed successfully
-            currentCycle = 1;
             return false;
         } else {
             return true;
@@ -49,6 +47,10 @@ public abstract class FunctionalUnit {
             for (int i = 1; i < stations.length; i++) {
                 stations[i - 1] = stations[i];
             }
+
+            requestWriteback = false;
+            // Reset count if executed successfully
+            currentCycle = 1;
         }
 
         // Execute if not stuck
@@ -62,9 +64,12 @@ public abstract class FunctionalUnit {
                 else {
                     // Remember, a queue only reads from the top
                     writeData = calculateResult(0);
+                    writeTag = stations[0].destTag;
                     requestWriteback = true;
                 }
             }
+
+            canWriteback = false;
         }
 
         // Snoop
@@ -77,11 +82,6 @@ public abstract class FunctionalUnit {
         }
     }
 
-    public boolean isReservationStationAvail() {
-        return stations[stations.length - 1] == null;
-    }
-
-
     public void acceptIssue(IssuedInst inst) {
         // This is what it will look like if we maintain the reservation stations like a queue
         // Find the first empty spot
@@ -93,7 +93,7 @@ public abstract class FunctionalUnit {
         }
 
         // Maybe a station is full
-        if (slot == stations.length - 1) {
+        if (slot == stations.length) {
             throw new MIPSException("Loader accept issue: slot not available");
         }
 
@@ -103,4 +103,23 @@ public abstract class FunctionalUnit {
         station.loadInst(inst);
     }
 
+    public boolean isReservationStationAvail() {
+        return stations[stations.length - 1] == null;
+    }
+
+    public boolean isRequestWriteback() {
+        return requestWriteback;
+    }
+
+    public int getResult() {
+        return writeData;
+    }
+
+    public int getDestTag() {
+        return writeTag;
+    }
+
+    public void setCanWriteback() {
+        canWriteback = true;
+    }
 }
