@@ -13,17 +13,35 @@ public class IntAlu extends FunctionalUnit{
     int data1 = stations[station].getData1();
     int data2 = stations[station].getData2();
     switch (stations[station].getFunction()) {
-      case ADD, ADDI -> result = data1 + data2;
-      case ANDI, AND -> result = data1 & data2;
-      case OR, ORI -> result = data1 | data2;
-      case XORI, XOR -> result = data1 ^ data2;
-      case SUB -> result = data1 - data2;
-      case SLL -> result = data1 << data2;
-      case SRL -> result = data1 >>> data2;
-      case SRA -> result = data1 >> data2;
+      case ADD:
+      case ADDI:
+        result = data1 + data2;
+        break;
+      case ANDI:
+      case AND:
+        result = data1 & data2;
+        break;
+      case OR:
+      case ORI:
+        result = data1 | data2;
+        break;
+      case XORI:
+      case XOR:
+        result = data1 ^ data2;
+        break;
+      case SUB:
+        result = data1 - data2;
+        break;
+      case SLL:
+        result = data1 << data2;
+        break;
+      case SRL:
+        result = data1 >>> data2;
+        break;
+      case SRA:
+        result = data1 >> data2;
+        break;
     }
-
-    // TODO add branching functionalities
 
     return result;
   }
