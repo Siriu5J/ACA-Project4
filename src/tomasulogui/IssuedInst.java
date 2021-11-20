@@ -5,14 +5,17 @@ public class IssuedInst {
     ADD, ADDI, SUB, MUL, DIV, AND, ANDI, OR, ORI, XOR, XORI, SLL, SRL, SRA,
         LOAD, STORE, HALT,
         NOP, BEQ, BNE, BLTZ, BLEZ, BGEZ, BGTZ, J, JAL, JR, JALR} ;
-
+  public enum INST_RIJ {
+    RTYPE, ITYPE, JTYPE}; 
+  
+    INST_RIJ RIJType;
     INST_TYPE opcode;
     int pc = -1;
 
     int regDest = -1;
     int regDestTag = -1;
     boolean regDestUsed = false;
-
+    
     int regSrc1 = -1;
     int regSrc1Value = -1;
     int regSrc1Tag = -1;
@@ -245,6 +248,7 @@ public class IssuedInst {
 
     private void decodeIType(ITypeInst inst) {
       // need to determine if it has a dest/src or 2 src
+      RIJType = INST_RIJ.ITYPE;
       if (opcode == INST_TYPE.ADDI ||
           opcode == INST_TYPE.ANDI ||
           opcode == INST_TYPE.ORI ||
@@ -267,10 +271,12 @@ public class IssuedInst {
     }
 
     private void decodeJType(JTypeInst inst) {
+      RIJType = INST_RIJ.JTYPE;
       immediate = (inst.getOffset() << 6) >> 6;
     }
 
     private void decodeRType(RTypeInst inst) {
+      RIJType = INST_RIJ.RTYPE;
       regDestUsed = true;
       regDest = inst.getRD();
       regSrc1Used = true;
