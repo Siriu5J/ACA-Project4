@@ -37,6 +37,10 @@ public class IssuedInst {
     public IssuedInst() {
     }
 
+    public INST_RIJ getRIJType(){
+        return RIJType;
+    }
+    
     public INST_TYPE getOpcode() {
       return opcode;
     }
