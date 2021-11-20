@@ -2,7 +2,7 @@ package tomasulogui;
 
 public class IssueUnit {
   private enum EXEC_TYPE {
-    NONE, LOAD, ALU, MULT, DIV, BRANCH} ;
+    NONE, LOAD, ALU, MULT, DIV, BRANCH, STORE} ;
 
     PipelineSimulator simulator;
     IssuedInst issuee;
@@ -14,9 +14,89 @@ public class IssueUnit {
       simulator = sim;
     }
     
+    public boolean isLoad(IssuedInst.INST_TYPE opcode){
+        return (opcode == IssuedInst.INST_TYPE.LOAD);
+    }
+    
+    public boolean isStore(IssuedInst.INST_TYPE opcode){
+        return (opcode == IssuedInst.INST_TYPE.STORE);
+    }
+    
+    public boolean isNone(IssuedInst.INST_TYPE opcode){
+        return (opcode == IssuedInst.INST_TYPE.HALT || opcode == IssuedInst.INST_TYPE.NOP);
+    }
+    
+    public boolean isMult(IssuedInst.INST_TYPE opcode){
+        return (opcode == IssuedInst.INST_TYPE.MUL);
+    }
+    
+    public boolean isDiv(IssuedInst.INST_TYPE opcode){
+        return (opcode == IssuedInst.INST_TYPE.DIV);
+    }
+    
+    public boolean isBranch(IssuedInst.INST_TYPE opcode){
+        switch(opcode){
+            case BEQ:
+            case BNE: 
+            case BLTZ: 
+            case BLEZ: 
+            case BGEZ:
+            case BGTZ:
+            case J:
+            case JAL: 
+            case JR: 
+            case JALR:
+                return true;
+            default: 
+                return false;
+        }
+    }
+    
+    public boolean isAlu(IssuedInst.INST_TYPE opcode){
+        switch(opcode){
+            case ADD:
+            case ADDI: 
+            case SUB: 
+            case AND: 
+            case ANDI:
+            case OR:
+            case ORI:
+            case XOR: 
+            case XORI: 
+            case SLL:
+            case SRL:
+            case SRA:
+                return true;
+            default: 
+                return false;
+        }
+    }
+    
     public void createIssuedInst() {
         Instruction i = simulator.memory.getInstAtAddr(pc);
         issuee = IssuedInst.createIssuedInst(i);
+        IssuedInst.INST_TYPE opcode = issuee.getOpcode();
+        if(isLoad(opcode)){
+            instType = EXEC_TYPE.LOAD;
+        }
+        else if(isStore(opcode)){
+            instType = EXEC_TYPE.STORE;
+        }
+        else if(isNone(opcode)){
+            instType = EXEC_TYPE.NONE;
+        }
+        else if(isMult(opcode)){
+            instType = EXEC_TYPE.MULT;
+        }
+        else if(isDiv(opcode)){
+            instType = EXEC_TYPE.DIV;
+        }
+        else if(isBranch(opcode)){
+            instType = EXEC_TYPE.BRANCH;
+        }
+        else if(isAlu(opcode)){
+            instType = EXEC_TYPE.ALU;
+        }
         pc+=4;
         //Need to parse as much as posssible for this issuedInst
     }
@@ -24,9 +104,19 @@ public class IssueUnit {
     public void execCycle() {
         createIssuedInst();
         switch(instType){
+            case STORE:
+                if(!simulator.reorder.isFull()){
+                    simulator.reorder.updateInstForIssue(issuee);
+                    // TODO: snoop cdb for any needed values
+                }
+                else{
+                    pc-=4;
+                }
+                break;
             case LOAD:
                 if(simulator.loader.isReservationStationAvail()&&!simulator.reorder.isFull()){
                     simulator.reorder.updateInstForIssue(issuee);
+                    // TODO: snoop cdb for any needed values
                     simulator.loader.acceptIssue(issuee);
                 }
                 else{
@@ -34,20 +124,24 @@ public class IssueUnit {
                 }
                 break;
             case ALU:
-                /*
                 if(simulator.alu.isReservationStationAvail()&&!simulator.reorder.isFull()){
                     simulator.reorder.updateInstForIssue(issuee);
+                    // TODO: snoop cdb for any needed values
                     simulator.alu.acceptIssue(issuee);
                 }
-                */
+                else{
+                    pc-=4;
+                }
                 break;
             case MULT:
-                /*
-                if(simulator.mult.isReservationStationAvail()&&!simulator.reorder.isFull()){
+                if(simulator.multiplier.isReservationStationAvail()&&!simulator.reorder.isFull()){
                     simulator.reorder.updateInstForIssue(issuee);
-                    simulator.mult.acceptIssue(issuee);
+                    // TODO: snoop cdb for any needed values
+                    simulator.multiplier.acceptIssue(issuee);
                 }
-                */
+                else{
+                    pc-=4;
+                }
                 break;
             case DIV:
                 break;
