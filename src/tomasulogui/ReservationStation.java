@@ -45,6 +45,17 @@ public class ReservationStation {
 
     public void snoop(CDB cdb) {
         // TODO - add code to snoop on CDB each cycle
+        if (!data1Valid) {
+            if (cdb.getDataValid() && cdb.getDataTag() == tag1) {
+                data1 = cdb.getDataValue();
+            }
+        }
+
+        if (!data2Valid) {
+            if (cdb.getDataValid() && cdb.getDataTag() == tag2) {
+                data2 = cdb.getDataValue();
+            }
+        }
     }
 
     public boolean isReady() {
@@ -53,6 +64,32 @@ public class ReservationStation {
 
     public void loadInst(IssuedInst inst) {
         // TODO add code to insert inst into reservation station
-        
+        destTag = inst.getRegDestTag();
+        // If operand 1 is valid, then we just add it
+        if (inst.getRegSrc1Valid()) {
+            tag1 = inst.getRegSrc1Tag();
+            data1 = inst.getRegSrc1Value();
+            data1Valid = true;
+        } else {
+            tag1 = inst.getRegSrc1Tag();
+        }
+
+        // If field 2 is used
+        if(inst.regSrc2Used) {
+            if (inst.getRegSrc2Valid()) {
+                tag2 = inst.getRegSrc2Tag();
+                data2 = inst.getRegSrc2Value();
+                data2Valid = true;
+            } else {
+                tag2 = inst.getRegSrc2Tag();
+            }
+        }
+        // Immediates
+        else {
+            // To identify an immediate, its tag will be -1
+            tag2 = -1;
+            data2 = inst.getImmediate();
+            data2Valid = true;
+        }
     }
 }
