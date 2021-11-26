@@ -39,13 +39,21 @@ public abstract class FunctionalUnit {
     public void execCycle(CDB cdb) {
         //todo - start executing, ask for CDB, etc.
 
+        // Snoop
+        if (cdb.getDataValid()) {
+            for (ReservationStation station : stations) {
+                if (station != null) {
+                    station.snoop(cdb);
+                }
+            }
+        }
+
         // Clear the reservation station if written back
         if (canWriteback) {
-            // We only clear top of the queue
-            stations[0] = null;
             // Move all items up the queue
             for (int i = 1; i < stations.length; i++) {
                 stations[i - 1] = stations[i];
+                stations[i] = null;
             }
 
             requestWriteback = false;
@@ -58,6 +66,9 @@ public abstract class FunctionalUnit {
             // If we are still "executing", we just increment counter
             if (stations[0] != null && stations[0].isReady()) {
                 if (isExecuting()) {
+                    // Update status in ROB
+                    simulator.reorder.getEntryByTag(stations[0].getDestTag()).setExecuting(true);
+
                     currentCycle++;
                 }
                 // If we are done waiting, we need to ask our child class to calculate result
@@ -66,19 +77,12 @@ public abstract class FunctionalUnit {
                     writeData = calculateResult(0);
                     writeTag = stations[0].destTag;
                     requestWriteback = true;
+                    // Update status in ROB
+                    simulator.reorder.getEntryByTag(stations[0].getDestTag()).setDoneExecuting();
                 }
             }
 
             canWriteback = false;
-        }
-
-        // Snoop
-        if (cdb.getDataValid()) {
-            for (ReservationStation station : stations) {
-                if (station != null) {
-                    station.snoop(cdb);
-                }
-            }
         }
     }
 

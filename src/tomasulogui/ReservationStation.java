@@ -65,6 +65,7 @@ public class ReservationStation {
     public void loadInst(IssuedInst inst) {
         // TODO add code to insert inst into reservation station
         destTag = inst.getRegDestTag();
+        function = inst.getOpcode();
         // If operand 1 is valid, then we just add it
         if (inst.getRegSrc1Valid()) {
             tag1 = inst.getRegSrc1Tag();

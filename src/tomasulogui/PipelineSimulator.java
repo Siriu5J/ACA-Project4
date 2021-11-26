@@ -408,6 +408,9 @@ public class PipelineSimulator {
             cdb.setDataValid(true);
             loader.setCanWriteback();
         }
+
+        // Update Re-order buffer
+        reorder.readCDB(cdb);
     }
 
     public static void main(String[] args) {

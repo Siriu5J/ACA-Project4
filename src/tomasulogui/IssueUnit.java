@@ -119,8 +119,13 @@ public class IssueUnit {
                     //if(simulator.cdb.getDataValid())
                     // snoop cdb for any needed values
                     if (!issuee.getRegSrc1Valid()) {
-                        if (simulator.cdb.getDataValid() && simulator.cdb.getDataTag() == issuee.regSrc1Tag) {
-                            issuee.regSrc1 = simulator.cdb.getDataValue();
+                        // If using reg 0, it will always be valid
+                        if (issuee.getRegSrc1() == 0) {
+                            issuee.regSrc1Value = 0;
+                            issuee.regSrc1Valid = true;
+                        }
+                        else if (simulator.cdb.getDataValid() && simulator.cdb.getDataTag() == issuee.regSrc1Tag) {
+                            issuee.regSrc1Value = simulator.cdb.getDataValue();
                             issuee.regSrc1Valid = true;
                         }
                     }
@@ -135,15 +140,20 @@ public class IssueUnit {
                     simulator.reorder.updateInstForIssue(issuee);
                     // snoop cdb for any needed values
                     if (!issuee.getRegSrc1Valid()) {
-                        if (simulator.cdb.getDataValid() && simulator.cdb.getDataTag() == issuee.regSrc1Tag) {
-                            issuee.regSrc1 = simulator.cdb.getDataValue();
+                        // If using reg 0, it will always be valid
+                        if (issuee.getRegSrc1() == 0) {
+                            issuee.regSrc1Value = 0;
+                            issuee.regSrc1Valid = true;
+                        }
+                        else if (simulator.cdb.getDataValid() && simulator.cdb.getDataTag() == issuee.regSrc1Tag) {
+                            issuee.regSrc1Value = simulator.cdb.getDataValue();
                             issuee.regSrc1Valid = true;
                         }
                     }
 
                     if (!issuee.getRegSrc2Valid()) {
                         if (simulator.cdb.getDataValid() && simulator.cdb.getDataTag() == issuee.regSrc2Tag) {
-                            issuee.regSrc2 = simulator.cdb.getDataValue();
+                            issuee.regSrc2Value = simulator.cdb.getDataValue();
                             issuee.regSrc2Valid = true;
                         }
                     }
@@ -158,15 +168,19 @@ public class IssueUnit {
                     simulator.reorder.updateInstForIssue(issuee);
                     // snoop cdb for any needed values
                     if (!issuee.getRegSrc1Valid()) {
-                        if (simulator.cdb.getDataValid() && simulator.cdb.getDataTag() == issuee.regSrc1Tag) {
-                            issuee.regSrc1 = simulator.cdb.getDataValue();
+                        if (issuee.getRegSrc1() == 0) {
+                            issuee.regSrc1Value = 0;
+                            issuee.regSrc1Valid = true;
+                        }
+                        else if (simulator.cdb.getDataValid() && simulator.cdb.getDataTag() == issuee.regSrc1Tag) {
+                            issuee.regSrc1Value = simulator.cdb.getDataValue();
                             issuee.regSrc1Valid = true;
                         }
                     }
 
                     if (!issuee.getRegSrc2Valid()) {
                         if (simulator.cdb.getDataValid() && simulator.cdb.getDataTag() == issuee.regSrc2Tag) {
-                            issuee.regSrc2 = simulator.cdb.getDataValue();
+                            issuee.regSrc2Value = simulator.cdb.getDataValue();
                             issuee.regSrc2Valid = true;
                         }
                     }
