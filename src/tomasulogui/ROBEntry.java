@@ -11,7 +11,7 @@ public class ROBEntry {
     // Destination register = write Reg
     int writeReg = -1;
     // The value to be written to the write Reg
-    int writeValue = -1;
+    
     // This is the tag that the ROB is snooping for on the cdb
     int tag = -1;
 
@@ -104,9 +104,14 @@ public class ROBEntry {
         // Figure out if any of the registers are valid or not
         // Tag the source registers that are not valid
         
+        // Tag the dest Register
         inst.setRegDestTag(frontQ);
         rob.setTagForReg(inst.getRegDest(), frontQ);
         tag = frontQ;
+        
+        // If we need to read the value of regSrc1 from registers
+        // If it is not tagged up, I can read it, otherwise use the tag
+        // Same deal for regSrc2
         if(inst.regSrc1Used){
             if(rob.getTagForReg(inst.getRegSrc1())==-1){
                 inst.setRegSrc1Valid();
