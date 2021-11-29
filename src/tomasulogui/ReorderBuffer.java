@@ -62,7 +62,9 @@ public class ReorderBuffer {
              retiree.getInstType() == IssuedInst.INST_RIJ.ITYPE) &&
             retiree.isComplete()) {
             if (retiree.shouldWb()) {
-
+                setDataForReg(retiree.getWriteReg(), retiree.getWriteValue());
+                setTagForReg(retiree.getWriteValue(), -1);
+                shouldAdvance = true;
             }
         }
 
@@ -83,8 +85,9 @@ public class ReorderBuffer {
 
         // TODO body of method
         if (cdb.dataValid) {
-            for (ROBEntry entry : buff) {
-                entry.setWriteValue(cdb.getDataValue());
+            for (int i = frontQ; i <= rearQ; i++) {
+                int cdbResult = cdb.getDataValue();
+                // TODO: Add code to set the values in Re-Order buffer
             }
         }
     }
@@ -116,6 +119,10 @@ public class ReorderBuffer {
 
     public int getDataForReg(int regNum) {
         return (regs.getReg(regNum));
+    }
+
+    public void setDataForReg(int regNum, int regValue) {
+        regs.setReg(regNum,regValue);
     }
 
     public void setTagForReg(int regNum, int tag) {
