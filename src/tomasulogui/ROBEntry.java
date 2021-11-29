@@ -11,7 +11,7 @@ public class ROBEntry {
     // Destination register = write Reg
     int writeReg = -1;
     // The value to be written to the write Reg
-    
+    int writeValue = -1;
     // This is the tag that the ROB is snooping for on the cdb
     int tag = -1;
 
