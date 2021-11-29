@@ -18,9 +18,11 @@ public class ROBEntry {
     // ROBEntry Store fields
     boolean destAddressRegValueValid = false;
     int destAddressRegValue = -1;
+    int destAddressRegValueTag = -1;
     int storeOffset = -1;
     boolean storeDataValid = false;
     int storeData = -1;
+    int storeDataTag = -1;
 
     IssuedInst.INST_TYPE opcode;
     IssuedInst.INST_RIJ instType;
@@ -137,7 +139,7 @@ public class ROBEntry {
             }
             else{
                 inst.setRegSrc1Tag(rob.getTagForReg(inst.getRegSrc1()));
-                destAddressRegValue = rob.getTagForReg(inst.getRegSrc1());
+                destAddressRegValueTag = rob.getTagForReg(inst.getRegSrc1());
             }
         }
         if(inst.regSrc2Used){
@@ -151,7 +153,7 @@ public class ROBEntry {
             }  
             else{
                 inst.setRegSrc2Tag(rob.getTagForReg(inst.getRegSrc2()));
-                storeData = rob.getTagForReg(inst.getRegSrc2());
+                storeDataTag = rob.getTagForReg(inst.getRegSrc2());
             }
         }
         // 2. update the fields of the ROBEntry, as shown in the 1st line of code above
