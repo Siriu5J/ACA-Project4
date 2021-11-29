@@ -14,6 +14,13 @@ public class ROBEntry {
     int writeValue = -1;
     // This is the tag that the ROB is snooping for on the cdb
     int tag = -1;
+    
+    // ROBEntry Store fields
+    boolean destAddressRegValueValid = false;
+    int destAddressRegValue = -1;
+    int storeOffset = -1;
+    boolean storeDataValid = false;
+    int storeData = -1;
 
     IssuedInst.INST_TYPE opcode;
     IssuedInst.INST_RIJ instType;
@@ -123,24 +130,38 @@ public class ROBEntry {
             if(rob.getTagForReg(inst.getRegSrc1())==-1){
                 inst.setRegSrc1Valid();
                 inst.setRegSrc1Value(rob.getDataForReg(inst.getRegSrc1()));
+                
+                //for store destination
+                destAddressRegValue = rob.getDataForReg(inst.getRegSrc1());
+                destAddressRegValueValid = true;
             }
             else{
                 inst.setRegSrc1Tag(rob.getTagForReg(inst.getRegSrc1()));
+                destAddressRegValue = rob.getTagForReg(inst.getRegSrc1());
             }
         }
         if(inst.regSrc2Used){
             if(rob.getTagForReg(inst.getRegSrc2())==-1){
                 inst.setRegSrc2Valid();
                 inst.setRegSrc2Value(rob.getDataForReg(inst.getRegSrc2()));
+                
+                //for store data
+                storeData = rob.getDataForReg(inst.getRegSrc2());
+                storeDataValid = true;
             }  
             else{
                 inst.setRegSrc2Tag(rob.getTagForReg(inst.getRegSrc2()));
+                storeData = rob.getTagForReg(inst.getRegSrc2());
             }
         }
         // 2. update the fields of the ROBEntry, as shown in the 1st line of code above
         instPC = inst.getPC();
+        opcode = inst.getOpcode();
         writeReg = inst.getRegDest();
         instType = inst.getRIJType();
+        //store fields
+        storeOffset = inst.getImmediate();
+        
     }
 
 }
