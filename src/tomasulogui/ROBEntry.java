@@ -91,6 +91,10 @@ public class ROBEntry {
         return shouldWb;
     }
 
+    public int getTag() {
+        return tag;
+    }
+
     public void copyInstData(IssuedInst inst, int frontQ) {
         // TODO - This is a long and complicated method, probably the most complex
         // of the project.  It does 2 things:

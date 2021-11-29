@@ -87,7 +87,7 @@ public class ReorderBuffer {
         if (cdb.dataValid) {
             for (int i = frontQ; i <= rearQ; i++) {
                 int cdbResult = cdb.getDataValue();
-                // TODO: Add code to set the values in Re-Order buffer
+
             }
         }
     }
