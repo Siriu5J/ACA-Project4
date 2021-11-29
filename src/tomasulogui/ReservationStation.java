@@ -48,12 +48,14 @@ public class ReservationStation {
         if (!data1Valid) {
             if (cdb.getDataValid() && cdb.getDataTag() == tag1) {
                 data1 = cdb.getDataValue();
+                data1Valid = true;
             }
         }
 
         if (!data2Valid) {
             if (cdb.getDataValid() && cdb.getDataTag() == tag2) {
                 data2 = cdb.getDataValue();
+                data2Valid = true;
             }
         }
     }

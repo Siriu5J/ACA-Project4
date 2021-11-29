@@ -77,8 +77,6 @@ public abstract class FunctionalUnit {
                     writeData = calculateResult(0);
                     writeTag = stations[0].destTag;
                     requestWriteback = true;
-                    // Update status in ROB
-                    simulator.reorder.getEntryByTag(stations[0].getDestTag()).setDoneExecuting();
                 }
             }
 

@@ -57,13 +57,20 @@ public class ReorderBuffer {
         // TODO - this is where you look at the type of instruction and
         // figure out how to retire it properly
 
+        // For store
+        if (retiree.getOpcode() == IssuedInst.INST_TYPE.STORE &&
+        retiree.destAddressRegValueValid &&
+        retiree.storeDataValid) {
+            simulator.memory.setIntDataAtAddr(retiree.destAddressRegValue + retiree.storeOffset, retiree.storeData);
+            shouldAdvance = true;
+        }
         // For R-Type or I-Type
-        if ((retiree.getInstType() == IssuedInst.INST_RIJ.RTYPE ||
+        else if ((retiree.getInstType() == IssuedInst.INST_RIJ.RTYPE ||
              retiree.getInstType() == IssuedInst.INST_RIJ.ITYPE) &&
             retiree.isComplete()) {
             if (retiree.shouldWb()) {
                 setDataForReg(retiree.getWriteReg(), retiree.getWriteValue());
-                setTagForReg(retiree.getWriteValue(), -1);
+                setTagForReg(retiree.getWriteReg(), -1);
                 shouldAdvance = true;
             }
         }
@@ -85,9 +92,25 @@ public class ReorderBuffer {
 
         // TODO body of method
         if (cdb.dataValid) {
-            for (int i = frontQ; i <= rearQ; i++) {
+            for (int i = frontQ; i < rearQ; i++) {
                 int cdbResult = cdb.getDataValue();
+                if (buff[i].getTag() == cdb.getDataTag()) {
+                    buff[i].setWriteValue(cdbResult);
+                    buff[i].setDoneExecuting();
+                }
 
+                // For Store
+                if (buff[i].getOpcode() == IssuedInst.INST_TYPE.STORE) {
+                    if (buff[i].storeDataTag == cdb.getDataTag() && !buff[i].storeDataValid) {
+                        buff[i].storeData = cdb.getDataValue();
+                        buff[i].storeDataValid = true;
+                    }
+
+                    if (buff[i].destAddressRegValueTag == cdb.getDataTag() && !buff[i].destAddressRegValueValid) {
+                        buff[i].destAddressRegValue = cdb.getDataValue();
+                        buff[i].destAddressRegValueValid = true;
+                    }
+                }
             }
         }
     }
