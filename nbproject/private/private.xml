@@ -4,18 +4,25 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/jaydu/OneDrive/Documents/NetBeansProjects/ACAProj4/ACA-Project4/src/tomasulogui/TomasuloGUIView.java</file>
+            <file>file:/C:/Users/jaydu/OneDrive/Documents/NetBeansProjects/ACAProj4/ACA-Project4/src/tomasulogui/Instruction.java</file>
+            <file>file:/C:/Users/jaydu/OneDrive/Documents/NetBeansProjects/ACAProj4/ACA-Project4/src/tomasulogui/BranchPredictor.java</file>
+            <file>file:/C:/Users/jaydu/OneDrive/Documents/NetBeansProjects/ACAProj4/ACA-Project4/src/tomasulogui/MemoryModel.java</file>
+            <file>file:/C:/Users/jaydu/OneDrive/Documents/NetBeansProjects/ACAProj4/ACA-Project4/src/tomasulogui/FunctionalUnit.java</file>
+            <file>file:/C:/Users/jaydu/OneDrive/Documents/NetBeansProjects/ACAProj4/ACA-Project4/src/tomasulogui/IssueUnit.java</file>
+            <file>file:/C:/Users/jaydu/OneDrive/Documents/NetBeansProjects/ACAProj4/ACA-Project4/src/tomasulogui/PipelineSimulator.java</file>
             <file>file:/C:/Users/jaydu/OneDrive/Documents/NetBeansProjects/ACAProj4/ACA-Project4/src/tomasulogui/ReservationStation.java</file>
+            <file>file:/C:/Users/jaydu/OneDrive/Documents/NetBeansProjects/ACAProj4/ACA-Project4/src/tomasulogui/BranchUnit.java</file>
             <file>file:/C:/Users/jaydu/OneDrive/Documents/NetBeansProjects/ACAProj4/ACA-Project4/src/tomasulogui/CDB.java</file>
+            <file>file:/C:/Users/jaydu/OneDrive/Documents/NetBeansProjects/ACAProj4/ACA-Project4/src/tomasulogui/TomasuloGUIAboutBox.java</file>
             <file>file:/C:/Users/jaydu/OneDrive/Documents/NetBeansProjects/ACAProj4/ACA-Project4/src/tomasulogui/LoadEntry.java</file>
             <file>file:/C:/Users/jaydu/OneDrive/Documents/NetBeansProjects/ACAProj4/ACA-Project4/src/tomasulogui/ReorderBuffer.java</file>
             <file>file:/C:/Users/jaydu/OneDrive/Documents/NetBeansProjects/ACAProj4/ACA-Project4/src/tomasulogui/IssuedInst.java</file>
-            <file>file:/C:/Users/jaydu/OneDrive/Documents/NetBeansProjects/ACAProj4/ACA-Project4/src/tomasulogui/MemoryModel.java</file>
-            <file>file:/C:/Users/jaydu/OneDrive/Documents/NetBeansProjects/ACAProj4/ACA-Project4/src/tomasulogui/FunctionalUnit.java</file>
             <file>file:/C:/Users/jaydu/OneDrive/Documents/NetBeansProjects/ACAProj4/ACA-Project4/src/tomasulogui/ROBEntry.java</file>
+            <file>file:/C:/Users/jaydu/OneDrive/Documents/NetBeansProjects/ACAProj4/ACA-Project4/src/tomasulogui/ProgramCounter.java</file>
             <file>file:/C:/Users/jaydu/OneDrive/Documents/NetBeansProjects/ACAProj4/ACA-Project4/src/tomasulogui/LoadBuffer.java</file>
-            <file>file:/C:/Users/jaydu/OneDrive/Documents/NetBeansProjects/ACAProj4/ACA-Project4/src/tomasulogui/IssueUnit.java</file>
             <file>file:/C:/Users/jaydu/OneDrive/Documents/NetBeansProjects/ACAProj4/ACA-Project4/src/tomasulogui/IntAlu.java</file>
-            <file>file:/C:/Users/jaydu/OneDrive/Documents/NetBeansProjects/ACAProj4/ACA-Project4/src/tomasulogui/PipelineSimulator.java</file>
+            <file>file:/C:/Users/jaydu/OneDrive/Documents/NetBeansProjects/ACAProj4/ACA-Project4/src/tomasulogui/TomasuloGUIApp.java</file>
         </group>
     </open-files>
 </project-private>
