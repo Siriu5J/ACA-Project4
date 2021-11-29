@@ -104,10 +104,17 @@ public class ROBEntry {
         // Figure out if any of the registers are valid or not
         // Tag the source registers that are not valid
         
+        shouldWb = false;
+        if(!inst.isBranch() && !(inst.opcode == IssuedInst.INST_TYPE.STORE)){
+            shouldWb = true;
+        }
+        
         // Tag the dest Register
-        inst.setRegDestTag(frontQ);
-        rob.setTagForReg(inst.getRegDest(), frontQ);
-        tag = frontQ;
+        if(shouldWb){
+            inst.setRegDestTag(frontQ);
+            rob.setTagForReg(inst.getRegDest(), frontQ);
+            tag = frontQ;
+        }
         
         // If we need to read the value of regSrc1 from registers
         // If it is not tagged up, I can read it, otherwise use the tag
@@ -134,10 +141,6 @@ public class ROBEntry {
         instPC = inst.getPC();
         writeReg = inst.getRegDest();
         instType = inst.getRIJType();
-        shouldWb = false;
-        if(!inst.isBranch() && !(inst.opcode == IssuedInst.INST_TYPE.STORE)){
-            shouldWb = true;
-        }
     }
 
 }
