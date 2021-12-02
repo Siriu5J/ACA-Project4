@@ -193,9 +193,13 @@ public class IssueUnit {
             case DIV:
                 break;
             case BRANCH:
-                /*
-                BRANCH IS FOR NOT 11/19/21
-                */
+                //check the branch predictor
+                simulator.btb.predictBranch(issuee);
+                if(issuee.getBranchPrediction()){
+                    simulator.pc.setPC(issuee.getBranchTgt());
+                }
+                //if predict taken, then change the pc and still send it to ROB and Branch unit
+                //if predict not taken, then just send it to ROB and Branch Unit
                 break;
             case NONE:
                 break;
