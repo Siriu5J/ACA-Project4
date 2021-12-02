@@ -5,8 +5,6 @@ public class ROBEntry {
 
     // TODO - add many more fields into entry
     // I deleted most, and only kept those necessary to compile GUI
-    boolean predictTaken = false;
-    boolean mispredicted = false;
     int instPC = -1;
     // Destination register = write Reg
     int writeReg = -1;
@@ -23,6 +21,11 @@ public class ROBEntry {
     boolean storeDataValid = false;
     int storeData = -1;
     int storeDataTag = -1;
+    boolean predictTaken = false;
+    boolean mispredicted = false;
+    int branchDest = -1;
+    int branchTag = -1;
+    int branchOffset = -1;
 
     IssuedInst.INST_TYPE opcode;
     IssuedInst.INST_RIJ instType;
