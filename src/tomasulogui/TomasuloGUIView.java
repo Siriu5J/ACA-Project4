@@ -3,17 +3,14 @@
  */
 package tomasulogui;
 
-import java.awt.Color;
-import javax.swing.JFileChooser;
-import org.jdesktop.application.SingleFrameApplication;
 import org.jdesktop.application.FrameView;
-import javax.swing.JTextField;
+import org.jdesktop.application.SingleFrameApplication;
+
+import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import javax.swing.JPanel;
-import javax.swing.GroupLayout;
-import javax.swing.JScrollPane;
 
 /**
  * The application's main frame.

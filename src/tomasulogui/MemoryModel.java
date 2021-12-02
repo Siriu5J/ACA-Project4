@@ -1,7 +1,8 @@
 package tomasulogui;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Scanner;
-import java.io.*;
 
 public class MemoryModel {
   static final int MAX_PROGRAM_SIZE = 10000;

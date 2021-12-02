@@ -1,15 +1,15 @@
 package tomasulogui;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Scanner;
 
 public class PipelineSimulator {
 
     private enum Command {
         EXIT, LOAD, RESET, RUN, STEP, SETBREAK, RUNBREAK, SHOWMEM, QUIET, UNUSED
-    }
-
-    ;
+    };
 
     MemoryModel memory;
     boolean isMemoryLoaded;
@@ -366,10 +366,10 @@ public class PipelineSimulator {
         regs.squashAll();
 
         loader.squashAll();
-//      alu.squashAll();
-//      multiplier.squashAll();
-//      divider.squashAll();
-//      branchUnit.squashAll();
+        alu.squashAll();
+        multiplier.squashAll();
+        divider.squashAll();
+        branchUnit.squashAll();
         cdb.squashAll();
     }
 

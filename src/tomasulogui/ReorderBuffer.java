@@ -1,5 +1,7 @@
 package tomasulogui;
 
+import java.util.Arrays;
+
 public class ReorderBuffer {
     public static final int size = 30;
     int frontQ = 0;
@@ -57,8 +59,17 @@ public class ReorderBuffer {
         // TODO - this is where you look at the type of instruction and
         // figure out how to retire it properly
 
+        // For branch
+        if (retiree.isBranch && retiree.mispredicted && retiree.branchDestValid) {
+            // Always set the offset
+            simulator.setPC(retiree.branchDest + retiree.branchOffset);
+            simulator.squashAllInsts();
+
+            // Squash ROB
+            Arrays.fill(buff, null);
+        }
         // For store
-        if (retiree.getOpcode() == IssuedInst.INST_TYPE.STORE &&
+        else if (retiree.getOpcode() == IssuedInst.INST_TYPE.STORE &&
         retiree.destAddressRegValueValid &&
         retiree.storeDataValid) {
             simulator.memory.setIntDataAtAddr(retiree.destAddressRegValue + retiree.storeOffset, retiree.storeData);
@@ -97,6 +108,13 @@ public class ReorderBuffer {
                 if (buff[i].getTag() == cdb.getDataTag()) {
                     buff[i].setWriteValue(cdbResult);
                     buff[i].setDoneExecuting();
+                }
+
+                // For branches
+                if (buff[i].isBranch && buff[i].branchTag != -1) {
+                    if (buff[i].branchTag == cdb.getDataTag()) {
+                        buff[i].branchDest = cdb.getDataValue();
+                    }
                 }
 
                 // For Store

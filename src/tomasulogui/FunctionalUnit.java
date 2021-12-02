@@ -22,6 +22,11 @@ public abstract class FunctionalUnit {
     public void squashAll() {
         // todo fill in
         Arrays.fill(stations, null);
+        currentCycle = 1;
+        writeData = -1;
+        writeTag = -1;
+        requestWriteback = false;
+        canWriteback = false;
     }
 
     public abstract int calculateResult(int station);
