@@ -24,6 +24,7 @@ public class ROBEntry {
     boolean isBranch = false;
     boolean predictTaken = false;
     boolean mispredicted = false;
+    boolean branchDestValid = false;
     int branchDest = -1;
     int branchTag = -1;
     int branchOffset = -1;
