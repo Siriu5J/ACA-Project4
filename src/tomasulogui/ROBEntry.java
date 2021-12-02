@@ -21,6 +21,7 @@ public class ROBEntry {
     boolean storeDataValid = false;
     int storeData = -1;
     int storeDataTag = -1;
+    boolean isBranch = false;
     boolean predictTaken = false;
     boolean mispredicted = false;
     int branchDest = -1;
