@@ -11,7 +11,9 @@ public class ReservationStation {
     boolean data2Valid = false;
     // destTag doubles as branch tag
     int destTag;
+    int offset;
     IssuedInst.INST_TYPE function = IssuedInst.INST_TYPE.NOP;
+    int pc;
 
     // following just for branches
     int addressTag;
@@ -66,8 +68,11 @@ public class ReservationStation {
 
     public void loadInst(IssuedInst inst) {
         // TODO add code to insert inst into reservation station
+        predictedTaken = inst.branchPrediction;
         destTag = inst.getRegDestTag();
         function = inst.getOpcode();
+        pc = inst.getPC();
+        offset = inst.immediate;
         // If operand 1 is valid, then we just add it
         if (inst.getRegSrc1Valid()) {
             tag1 = inst.getRegSrc1Tag();
