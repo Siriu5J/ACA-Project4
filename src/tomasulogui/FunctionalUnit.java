@@ -43,6 +43,7 @@ public abstract class FunctionalUnit {
 
     public void execCycle(CDB cdb) {
         //todo - start executing, ask for CDB, etc.
+        // TODO: Add clearing for BranchUnit
 
         // Snoop
         if (cdb.getDataValid()) {

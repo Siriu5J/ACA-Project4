@@ -9,6 +9,7 @@ public class IntAlu extends FunctionalUnit{
 
 
   public int calculateResult(int station) {
+    
     int result = 0;
     int data1 = stations[station].getData1();
     int data2 = stations[station].getData2();

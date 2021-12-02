@@ -16,9 +16,10 @@ public class ReservationStation {
     int pc;
 
     // following just for branches
-    int addressTag;
+    int robSlot = -1;
+    int addressTag = -1;
     boolean addressValid = false;
-    int address;
+    int address = -1;
     boolean predictedTaken = false;
 
     public ReservationStation(PipelineSimulator sim) {
@@ -99,5 +100,8 @@ public class ReservationStation {
             data2 = inst.getImmediate();
             data2Valid = true;
         }
+
+        // For branch
+        robSlot = inst.robSlot;
     }
 }

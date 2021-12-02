@@ -117,7 +117,7 @@ public class ROBEntry {
         // Tag the source registers that are not valid
         
         shouldWb = false;
-        if(!inst.isBranch() && !(inst.opcode == IssuedInst.INST_TYPE.STORE)){
+        if(!inst.isBranch() && !(inst.opcode == IssuedInst.INST_TYPE.STORE) && !(inst.opcode == IssuedInst.INST_TYPE.HALT)){
             shouldWb = true;
         }
         

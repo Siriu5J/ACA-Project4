@@ -33,6 +33,7 @@ public class IssuedInst {
     boolean branch = false;
     boolean branchPrediction = false;
     int branchTgt = -1;
+    int robSlot = -1;
 
     public IssuedInst() {
     }

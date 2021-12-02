@@ -98,7 +98,9 @@ public class BranchUnit
         boolean mispredict = isMispredict(station);
         int addr = calculateAddress(station);
         if(mispredictValid && addressValid){
-            
+            simulator.reorder.buff[stations[station].robSlot].mispredicted = mispredict;
+            simulator.reorder.buff[stations[station].robSlot].branchDest = addr;
+            simulator.reorder.buff[stations[station].robSlot].branchDestValid = true;
         }
         //figure out if it is a mispredict
         //calculate the destination address

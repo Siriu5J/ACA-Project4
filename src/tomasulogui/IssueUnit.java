@@ -92,6 +92,7 @@ public class IssueUnit {
         }
         else if(isBranch(opcode)){
             instType = EXEC_TYPE.BRANCH;
+            issuee.setBranch();
         }
         else if(isAlu(opcode)){
             instType = EXEC_TYPE.ALU;

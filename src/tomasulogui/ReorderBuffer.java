@@ -60,15 +60,19 @@ public class ReorderBuffer {
         // figure out how to retire it properly
 
         // For branch
-        if (retiree.isBranch && retiree.mispredicted && retiree.branchDestValid) {
-            // Always set the offset
-            simulator.setPC(retiree.branchDest);
-            simulator.squashAllInsts();
+        if (retiree.isBranch && retiree.branchDestValid) {
+            if (retiree.mispredicted) {
+                // Always set the offset
+                simulator.setPC(retiree.branchDest);
+                simulator.squashAllInsts();
 
-            // Squash ROB
-            Arrays.fill(buff, null);
-            frontQ = 0;
-            rearQ = 0;
+                // Squash ROB
+                Arrays.fill(buff, null);
+                frontQ = 0;
+                rearQ = 0;
+            } else {
+                shouldAdvance = true;
+            }
         }
         // For store
         else if (retiree.getOpcode() == IssuedInst.INST_TYPE.STORE &&
@@ -145,6 +149,7 @@ public class ReorderBuffer {
         ROBEntry newEntry = new ROBEntry(this);
         buff[rearQ] = newEntry;
         newEntry.copyInstData(inst, rearQ);
+        inst.robSlot = rearQ;
 
         rearQ = (rearQ + 1) % size;
     }
