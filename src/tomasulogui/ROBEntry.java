@@ -156,6 +156,7 @@ public class ROBEntry {
                 storeDataTag = rob.getTagForReg(inst.getRegSrc2());
             }
         }
+        //POSSIBLE BUG... MAY NEED TO SNOOP CDB FOR STORE FOR THIS CLOCK CYCLE
         // 2. update the fields of the ROBEntry, as shown in the 1st line of code above
         instPC = inst.getPC();
         opcode = inst.getOpcode();
