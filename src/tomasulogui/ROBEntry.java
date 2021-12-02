@@ -23,7 +23,7 @@ public class ROBEntry {
     int storeDataTag = -1;
     boolean isBranch = false;
     boolean predictTaken = false;
-    boolean mispredicted = false;
+    boolean mispredicted = false;//this is filled by the branch unit
     boolean branchDestValid = false;
     int branchDest = -1;
     int branchTag = -1;
@@ -129,7 +129,13 @@ public class ROBEntry {
             rob.setTagForReg(inst.getRegDest(), frontQ);
             tag = frontQ;
         }
-        
+        /*if(inst.isBranch()){
+            if(inst.regSrc1Used){
+                if(rob.getTagForReg(inst.getRegSrc1()) == -1){
+                    //inst.setRegSr
+                }
+            }
+        }*/
         // If we need to read the value of regSrc1 from registers
         // If it is not tagged up, I can read it, otherwise use the tag
         // Same deal for regSrc2
@@ -169,6 +175,9 @@ public class ROBEntry {
         instType = inst.getRIJType();
         //store fields
         storeOffset = inst.getImmediate();
+        
+        isBranch = inst.isBranch();
+        predictTaken = inst.getBranchPrediction();
         
     }
 
