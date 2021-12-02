@@ -270,6 +270,10 @@ public class IssuedInst {
         regSrc2Used = true;
         regSrc2 = inst.getRT();
         immediate = (inst.getImmed() << 16) >> 16;
+        if (opcode == INST_TYPE.BNE ||
+            opcode == INST_TYPE.BEQ){
+           regSrc2Used = false;
+        }
       }
 
     }
@@ -277,6 +281,8 @@ public class IssuedInst {
     private void decodeJType(JTypeInst inst) {
       RIJType = INST_RIJ.JTYPE;
       immediate = (inst.getOffset() << 6) >> 6;
+      regSrc1Used = false;
+      regSrc2Used = false;
     }
 
     private void decodeRType(RTypeInst inst) {

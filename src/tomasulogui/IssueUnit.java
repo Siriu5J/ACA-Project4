@@ -194,9 +194,31 @@ public class IssueUnit {
                 break;
             case BRANCH:
                 //check the branch predictor
-                simulator.btb.predictBranch(issuee);
-                if(issuee.getBranchPrediction()){
-                    simulator.pc.setPC(issuee.getBranchTgt());
+                if(simulator.branchUnit.isReservationStationAvail()&&!simulator.reorder.isFull()){
+                    simulator.btb.predictBranch(issuee);
+                    simulator.reorder.updateInstForIssue(issuee);
+                    if (!issuee.getRegSrc1Valid()&&issuee.regSrc1Used) {
+                        // If using reg 0, it will always be valid
+                        if (issuee.getRegSrc1() == 0) {
+                            issuee.regSrc1Value = 0;
+                            issuee.regSrc1Valid = true;
+                        }
+                        else if (simulator.cdb.getDataValid() && simulator.cdb.getDataTag() == issuee.regSrc1Tag) {
+                            issuee.regSrc1Value = simulator.cdb.getDataValue();
+                            issuee.regSrc1Valid = true;
+                        }
+                    }
+
+                    if (!issuee.getRegSrc2Valid()&&issuee.regSrc2Used) {
+                        if (simulator.cdb.getDataValid() && simulator.cdb.getDataTag() == issuee.regSrc2Tag) {
+                            issuee.regSrc2Value = simulator.cdb.getDataValue();
+                            issuee.regSrc2Valid = true;
+                        }
+                    }
+                    simulator.branchUnit.acceptIssue(issuee);
+                }
+                else{
+                    simulator.pc.setPC(simulator.pc.getPC()-4);
                 }
                 //if predict taken, then change the pc and still send it to ROB and Branch unit
                 //if predict not taken, then just send it to ROB and Branch Unit

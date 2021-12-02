@@ -70,7 +70,7 @@ public class BranchPredictor {
       simulator.setPC(tgtAddress);
     }
     else {
-      simulator.setPC(issued.getPC() + 4);
+      //simulator.setPC(issued.getPC() + 4);
     }
   }
 
