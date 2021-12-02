@@ -224,6 +224,9 @@ public class IssueUnit {
                 //if predict not taken, then just send it to ROB and Branch Unit
                 break;
             case NONE:
+                if(!simulator.reorder.isFull()){
+                    simulator.reorder.updateInstForIssue(issuee);
+                }
                 break;
             default:
                 break;
