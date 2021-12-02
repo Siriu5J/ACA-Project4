@@ -26,8 +26,6 @@ public class ROBEntry {
     boolean mispredicted = false;
     boolean branchDestValid = false;
     int branchDest = -1;
-    int branchTag = -1;
-    int branchOffset = -1;
 
     IssuedInst.INST_TYPE opcode;
     IssuedInst.INST_RIJ instType;

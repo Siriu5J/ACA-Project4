@@ -62,11 +62,13 @@ public class ReorderBuffer {
         // For branch
         if (retiree.isBranch && retiree.mispredicted && retiree.branchDestValid) {
             // Always set the offset
-            simulator.setPC(retiree.branchDest + retiree.branchOffset);
+            simulator.setPC(retiree.branchDest);
             simulator.squashAllInsts();
 
             // Squash ROB
             Arrays.fill(buff, null);
+            frontQ = 0;
+            rearQ = 0;
         }
         // For store
         else if (retiree.getOpcode() == IssuedInst.INST_TYPE.STORE &&
@@ -108,13 +110,6 @@ public class ReorderBuffer {
                 if (buff[i].getTag() == cdb.getDataTag()) {
                     buff[i].setWriteValue(cdbResult);
                     buff[i].setDoneExecuting();
-                }
-
-                // For branches
-                if (buff[i].isBranch && buff[i].branchTag != -1) {
-                    if (buff[i].branchTag == cdb.getDataTag()) {
-                        buff[i].branchDest = cdb.getDataValue();
-                    }
                 }
 
                 // For Store
