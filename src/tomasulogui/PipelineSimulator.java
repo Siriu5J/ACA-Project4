@@ -304,6 +304,7 @@ public class PipelineSimulator {
             issue.execCycle();
 
             instExec++;
+            System.out.println("Executed " + instExec + " Instructions");
         }
 
         if (!quietMode) {

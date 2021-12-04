@@ -1,5 +1,7 @@
 package tomasulogui;
 
+import java.util.Arrays;
+
 public class ROBEntry {
     ReorderBuffer rob;
 
@@ -208,7 +210,7 @@ public class ROBEntry {
             rob.setTagForReg(inst.getRegDest(), frontQ);
             tag = frontQ;
         }
-        
+        System.out.println("ROB Slot: \n" + Arrays.toString(rob.simulator.regs.robSlot));
     }
 
 }

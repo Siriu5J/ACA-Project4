@@ -87,7 +87,8 @@ public class ReorderBuffer {
             retiree.isComplete()) {
             if (retiree.shouldWb()) {
                 setDataForReg(retiree.getWriteReg(), retiree.getWriteValue());
-                setTagForReg(retiree.getWriteReg(), -1);
+                if (simulator.regs.getSlotForReg(retiree.writeReg) == retiree.tag)
+                    setTagForReg(retiree.getWriteReg(), -1);
                 shouldAdvance = true;
             }
         }

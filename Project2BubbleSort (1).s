@@ -64,8 +64,10 @@ HALT
 End Assembly
 --Data Stuff
 Begin Data 4000 600
+5
 3
-3
-2
 1
+2
+5
+6
 End Data

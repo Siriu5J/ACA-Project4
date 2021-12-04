@@ -268,12 +268,12 @@ public class IssuedInst {
       else {
         regSrc1Used = true;
         regSrc1 = inst.getRS();
-        regSrc2Used = true;
+        regSrc2Used = false;
         regSrc2 = inst.getRT();
         immediate = (inst.getImmed() << 16) >> 16;
         if (opcode == INST_TYPE.BNE ||
             opcode == INST_TYPE.BEQ){
-           regSrc2Used = false;
+           regSrc2Used = true;
         }
       }
 

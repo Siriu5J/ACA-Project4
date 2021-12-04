@@ -157,12 +157,12 @@ public class IssueUnit {
                             issuee.regSrc1Value = simulator.cdb.getDataValue();
                             issuee.regSrc1Valid = true;
                         }
-                        else if(issuee.regSrc1Tag != -1) {
+                        /*else if(issuee.regSrc1Tag != -1) {
                             if (simulator.getROB().buff[issuee.regSrc1Tag].isComplete()) {
                                 issuee.regSrc1Value = simulator.getROB().buff[issuee.regSrc1Tag].getWriteValue();
                                 issuee.regSrc1Valid = true;
                             }
-                        }
+                        }*/
                     }
 
                     if (!issuee.getRegSrc2Valid()) {
@@ -170,12 +170,12 @@ public class IssueUnit {
                             issuee.regSrc2Value = simulator.cdb.getDataValue();
                             issuee.regSrc2Valid = true;
                         }
-                        else if(issuee.regSrc2Tag != -1) {
+                        /*else if(issuee.regSrc2Tag != -1) {
                             if (simulator.getROB().buff[issuee.regSrc2Tag].isComplete()) {
                                 issuee.regSrc2Value = simulator.getROB().buff[issuee.regSrc2Tag].getWriteValue();
                                 issuee.regSrc2Valid = true;
                             }
-                        }
+                        }*/
                     }
                     simulator.alu.acceptIssue(issuee);
                 }
@@ -196,12 +196,12 @@ public class IssueUnit {
                             issuee.regSrc1Value = simulator.cdb.getDataValue();
                             issuee.regSrc1Valid = true;
                         }
-                        else if(issuee.regSrc1Tag != -1) {
+                        /*else if(issuee.regSrc1Tag != -1) {
                             if (simulator.getROB().buff[issuee.regSrc1Tag].isComplete()) {
                                 issuee.regSrc1Value = simulator.getROB().buff[issuee.regSrc1Tag].getWriteValue();
                                 issuee.regSrc1Valid = true;
                             }
-                        }
+                        }*/
                     }
 
                     if (!issuee.getRegSrc2Valid()) {
@@ -209,12 +209,12 @@ public class IssueUnit {
                             issuee.regSrc2Value = simulator.cdb.getDataValue();
                             issuee.regSrc2Valid = true;
                         }
-                        else if(issuee.regSrc2Tag != -1) {
+                        /*else if(issuee.regSrc2Tag != -1) {
                             if (simulator.getROB().buff[issuee.regSrc1Tag].isComplete()) {
                                 issuee.regSrc2Value = simulator.getROB().buff[issuee.regSrc2Tag].getWriteValue();
                                 issuee.regSrc2Valid = true;
                             }
-                        }
+                        }*/
                     }
                     simulator.multiplier.acceptIssue(issuee);
                 }
