@@ -79,14 +79,27 @@ public abstract class FunctionalUnit {
                 }
                 // If we are done waiting, we need to ask our child class to calculate result
                 else {
-                    // Remember, a queue only reads from the top
-                    writeData = calculateResult(0);
-                    writeTag = stations[0].destTag;
-                    requestWriteback = true;
+                    if (simulator.issue.isBranch(stations[0].getFunction())) {
+                        System.out.println("Executing Branch " + stations[0].pc);
+                        this.canWriteback = true;
+                        calculateResult(0);
+                    } else {
+                        // Remember, a queue only reads from the top
+                        System.out.println("Executing " + stations[0].pc);
+                        writeData = calculateResult(0);
+                        writeTag = stations[0].destTag;
+                        requestWriteback = true;
+                    }
                 }
             }
 
-            canWriteback = false;
+            if (stations[0] != null) {
+                if (!simulator.issue.isBranch(stations[0].getFunction()))
+                    canWriteback = false;
+            }
+
+            if (stations[0] == null)
+                canWriteback = false;
         }
     }
 

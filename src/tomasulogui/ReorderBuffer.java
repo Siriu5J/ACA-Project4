@@ -109,23 +109,25 @@ public class ReorderBuffer {
 
         // TODO body of method
         if (cdb.dataValid) {
-            for (int i = frontQ; i < rearQ; i++) {
-                int cdbResult = cdb.getDataValue();
-                if (buff[i].getTag() == cdb.getDataTag()) {
-                    buff[i].setWriteValue(cdbResult);
-                    buff[i].setDoneExecuting();
-                }
-
-                // For Store
-                if (buff[i].getOpcode() == IssuedInst.INST_TYPE.STORE) {
-                    if (buff[i].storeDataTag == cdb.getDataTag() && !buff[i].storeDataValid) {
-                        buff[i].storeData = cdb.getDataValue();
-                        buff[i].storeDataValid = true;
+            for (ROBEntry entry : buff) {
+                if (entry != null) {
+                    int cdbResult = cdb.getDataValue();
+                    if (entry.getTag() == cdb.getDataTag()) {
+                        entry.setWriteValue(cdbResult);
+                        entry.setDoneExecuting();
                     }
 
-                    if (buff[i].destAddressRegValueTag == cdb.getDataTag() && !buff[i].destAddressRegValueValid) {
-                        buff[i].destAddressRegValue = cdb.getDataValue();
-                        buff[i].destAddressRegValueValid = true;
+                    // For Store
+                    if (entry.getOpcode() == IssuedInst.INST_TYPE.STORE) {
+                        if (entry.storeDataTag == cdb.getDataTag() && !entry.storeDataValid) {
+                            entry.storeData = cdb.getDataValue();
+                            entry.storeDataValid = true;
+                        }
+
+                        if (entry.destAddressRegValueTag == cdb.getDataTag() && !entry.destAddressRegValueValid) {
+                            entry.destAddressRegValue = cdb.getDataValue();
+                            entry.destAddressRegValueValid = true;
+                        }
                     }
                 }
             }
@@ -152,6 +154,7 @@ public class ReorderBuffer {
         inst.robSlot = rearQ;
 
         rearQ = (rearQ + 1) % size;
+        System.out.println("Front Q: " + frontQ + "; Rear Q: " + rearQ);
     }
 
     public int getTagForReg(int regNum) {

@@ -120,13 +120,7 @@ public class ROBEntry {
         if(!inst.isBranch() && !(inst.opcode == IssuedInst.INST_TYPE.STORE) && !(inst.opcode == IssuedInst.INST_TYPE.HALT)){
             shouldWb = true;
         }
-        
-        // Tag the dest Register
-        if(shouldWb){
-            inst.setRegDestTag(frontQ);
-            rob.setTagForReg(inst.getRegDest(), frontQ);
-            tag = frontQ;
-        }
+
         /*if(inst.isBranch()){
             if(inst.regSrc1Used){
                 if(rob.getTagForReg(inst.getRegSrc1()) == -1){
@@ -176,6 +170,44 @@ public class ROBEntry {
         
         isBranch = inst.isBranch();
         predictTaken = inst.getBranchPrediction();
+        if(opcode == IssuedInst.INST_TYPE.STORE){
+            if (!inst.getRegSrc1Valid()) {
+                // If using reg 0, it will always be valid
+                if (inst.getRegSrc1() == 0) {
+                    inst.regSrc1Value = 0;
+                    inst.regSrc1Valid = true;
+                }
+                else if (rob.simulator.cdb.getDataValid() && rob.simulator.cdb.getDataTag() == inst.regSrc1Tag) {
+                    destAddressRegValue = rob.simulator.cdb.getDataValue();
+                    destAddressRegValueValid = true;
+                }
+                else if(inst.regSrc1Tag != -1) {
+                    if (rob.simulator.getROB().buff[inst.regSrc1Tag].isComplete()) {
+                        destAddressRegValue = rob.simulator.getROB().buff[inst.regSrc1Tag].getWriteValue();
+                        destAddressRegValueValid = true;
+                    }
+                }
+            }
+
+            if (!inst.getRegSrc2Valid()) {
+                if (rob.simulator.cdb.getDataValid() && rob.simulator.cdb.getDataTag() == inst.regSrc2Tag) {
+                    storeData = rob.simulator.cdb.getDataValue();
+                    storeDataValid = true;
+                }
+                else if(inst.regSrc2Tag != -1) {
+                    if (rob.simulator.getROB().buff[inst.regSrc2Tag].isComplete()) {
+                        storeData = rob.simulator.getROB().buff[inst.regSrc2Tag].getWriteValue();
+                        storeDataValid = true;
+                    }
+                }
+            }
+        }
+        // Tag the dest Register
+        if(shouldWb){
+            inst.setRegDestTag(frontQ);
+            rob.setTagForReg(inst.getRegDest(), frontQ);
+            tag = frontQ;
+        }
         
     }
 

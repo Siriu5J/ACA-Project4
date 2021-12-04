@@ -16,25 +16,25 @@ public class BranchUnit
             stations[station].function == IssuedInst.INST_TYPE.JR ||
             stations[station].function == IssuedInst.INST_TYPE.JAL ||
             stations[station].function == IssuedInst.INST_TYPE.JALR) {
-            
+            mispredictValid = true;
             return false;
         }
         if(stations[station].data1Valid &&  stations[station].data2Valid){
-            mispredictValid = true;
             if (stations[station].function == IssuedInst.INST_TYPE.BEQ){
+                mispredictValid = true;
                 if(stations[station].data1 == stations[station].data2){
-                    return (true == stations[station].isPredictedTaken());
+                    return (!stations[station].isPredictedTaken());
                 }
                 else{
-                    return (false == stations[station].isPredictedTaken());
+                    return (stations[station].isPredictedTaken());
                 }
             }
             if (stations[station].function == IssuedInst.INST_TYPE.BNE){
                 if(stations[station].data1 != stations[station].data2){
-                    return (true == stations[station].isPredictedTaken());
+                    return (!stations[station].isPredictedTaken());
                 }
                 else{
-                    return (false == stations[station].isPredictedTaken());
+                    return (stations[station].isPredictedTaken());
                 }
             }
         }
@@ -42,37 +42,37 @@ public class BranchUnit
             if (stations[station].function == IssuedInst.INST_TYPE.BLTZ){
                 mispredictValid = true;
                 if(stations[station].data1 < stations[station].data2){
-                    return (true == stations[station].isPredictedTaken());
+                    return (!stations[station].isPredictedTaken());
                 }
                 else{
-                    return (false == stations[station].isPredictedTaken());
+                    return (stations[station].isPredictedTaken());
                 }
             }
             if (stations[station].function == IssuedInst.INST_TYPE.BLEZ){
                 mispredictValid = true;
                 if(stations[station].data1 <= stations[station].data2){
-                    return (true == stations[station].isPredictedTaken());
+                    return (!stations[station].isPredictedTaken());
                 }
                 else{
-                    return (false == stations[station].isPredictedTaken());
+                    return (stations[station].isPredictedTaken());
                 }
             }
             if (stations[station].function == IssuedInst.INST_TYPE.BGTZ){
                 mispredictValid = true;
                 if(stations[station].data1 > stations[station].data2){
-                    return (true == stations[station].isPredictedTaken());
+                    return (!stations[station].isPredictedTaken());
                 }
                 else{
-                    return (false == stations[station].isPredictedTaken());
+                    return (stations[station].isPredictedTaken());
                 }
             }
             if (stations[station].function == IssuedInst.INST_TYPE.BGEZ){
                 mispredictValid = true;
                 if(stations[station].data1 >= stations[station].data2){
-                    return (true == stations[station].isPredictedTaken());
+                    return (!stations[station].isPredictedTaken());
                 }
                 else{
-                    return (false == stations[station].isPredictedTaken());
+                    return (stations[station].isPredictedTaken());
                 }
             }
         }
@@ -90,7 +90,7 @@ public class BranchUnit
             return 0;
         }
         addressValid = true;
-        return stations[station].pc+stations[station].offset;
+        return stations[station].pc + stations[station].offset + 4;
     }
     
     public int calculateResult(int station) {

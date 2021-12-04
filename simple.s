@@ -7,7 +7,7 @@ LW R3, 0(R1)
 LW R4, 0(R2)
 ADD R5, R3, R4
 SW R5, 4(R2)
-J jump
+BGEZ R5, jump
 ADD R1, R3, R2
 HALT
 

@@ -64,6 +64,9 @@ public class ReservationStation {
     }
 
     public boolean isReady() {
+        if(function == IssuedInst.INST_TYPE.J || function == IssuedInst.INST_TYPE.JAL){
+            return true;
+        }
         return data1Valid && data2Valid;
     }
 
