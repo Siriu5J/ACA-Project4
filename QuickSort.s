@@ -19,7 +19,7 @@
 -- R21 is partition return value (also the partitioning index(pi))
 -- R31 is the hardwares return address pointer
 Begin Assembly
-J QSTest
+J PartitionTest
 ------------------------------------------
 -- Start quickSort
 ------------------------------------------
@@ -192,22 +192,6 @@ Begin Data 4000 600
 71
 14
 30
-34
-70
-59
-76
-75
-21
-59
-81
-16
-42
-52
-38
-31
-2
-81
-70
 End Data
 Begin Data 3000 200
 End Data
