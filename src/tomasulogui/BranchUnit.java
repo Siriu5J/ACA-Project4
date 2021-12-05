@@ -90,7 +90,13 @@ public class BranchUnit
             }
             return 0;
         }
-        addressValid = true;
+        if(stations[station].isPredictedTaken()&&mispredict&&mispredictValid){
+            addressValid = true;
+            return stations[station].pc;
+        }
+        else if(mispredictValid){
+            addressValid = true;
+        }
         return stations[station].pc + stations[station].offset + 4;
     }
     

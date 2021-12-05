@@ -76,7 +76,7 @@ ADDI R14, R0, 4000
 -- low is 0
 ADDI R15, R0, 0
 -- high is 10
-ADDI R16, R0, 4
+ADDI R16, R0, 19
 JAL quickSort
 HALT
 ------------------------------------------
@@ -88,7 +88,7 @@ ADDI R14, R0, 4000
 -- low is 0
 ADDI R15, R0, 0
 -- high is 10
-ADDI R16, R0, 4
+ADDI R16, R0, 19
 JAL Partition
 HALT
 ------------------------------------------
@@ -187,11 +187,26 @@ JR R31
 End Assembly
 -- begin main data
 Begin Data 4000 600
-188
+93
+6
+95
+58
+15
+89
+28
+18
 2
-167
-124
-23
+38
+59
+80
+21
+5
+14
+33
+83
+35
+72
+50
 End Data
 Begin Data 3000 200
 End Data

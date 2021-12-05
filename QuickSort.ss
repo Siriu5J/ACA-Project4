@@ -75,7 +75,7 @@ LABEL QSTest
       -- low is 0
 92:  ADDI R15, R0, 0
       -- high is 10
-96:  ADDI R16, R0, 4
+96:  ADDI R16, R0, 19
 100:  JAL quickSort
 104:  HALT
       ------------------------------------------
@@ -87,7 +87,7 @@ LABEL PartitionTest
       -- low is 0
 112:  ADDI R15, R0, 0
       -- high is 10
-116:  ADDI R16, R0, 4
+116:  ADDI R16, R0, 19
 120:  JAL Partition
 124:  HALT
       ------------------------------------------
