@@ -61,6 +61,9 @@ public class ReorderBuffer {
 
         // For branch
         if (retiree.isBranch && retiree.branchDestValid) {
+            simulator.btb.setBranchAddress(retiree.getInstPC(), retiree.branchDest);
+            simulator.btb.setBranchResult(retiree.getInstPC(), (retiree.predictTaken ^ retiree.mispredicted));
+
             if (retiree.mispredicted) {
                 // Always set the offset
                 simulator.setPC(retiree.branchDest);

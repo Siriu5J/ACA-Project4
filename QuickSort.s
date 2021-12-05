@@ -187,11 +187,11 @@ JR R31
 End Assembly
 -- begin main data
 Begin Data 4000 600
-20
-83
-71
-14
-30
+188
+2
+167
+124
+23
 End Data
 Begin Data 3000 200
 End Data
