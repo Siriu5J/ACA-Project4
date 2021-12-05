@@ -56,10 +56,14 @@ public class LoadBuffer {
         if (!requestWriteback) {
             if (loadExecuting) {
                 // we are finished execution
-
-                requestWriteback = true;
-                int address = buff[writebackEntry].getAddress();
-                writeData = simulator.getMemory().getIntDataAtAddr(address);
+                // Fix the WAR issue with load after write
+                if (!simulator.reorder.checkWAR(buff[writebackEntry].address, buff[writebackEntry].addrTag)) {
+                    requestWriteback = true;
+                    int address = buff[writebackEntry].getAddress();
+                    writeData = simulator.getMemory().getIntDataAtAddr(address);
+                } else {
+                    System.out.println("WAR!!!");
+                }
             }
             // aren't executing inst
             // because Branches might fall to here after completing (since don't

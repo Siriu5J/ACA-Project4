@@ -170,7 +170,7 @@ public class IssueUnit {
                             issuee.regSrc2Value = simulator.cdb.getDataValue();
                             issuee.regSrc2Valid = true;
                         }
-                        else if(issuee.determineIfBranch()&&issuee.regSrc2Tag != -1) {
+                        else if(!issuee.determineIfBranch()&&issuee.regSrc2Tag != -1) {
                             if (simulator.getROB().buff[issuee.regSrc2Tag].isComplete()) {
                                 issuee.regSrc2Value = simulator.getROB().buff[issuee.regSrc2Tag].getWriteValue();
                                 issuee.regSrc2Valid = true;

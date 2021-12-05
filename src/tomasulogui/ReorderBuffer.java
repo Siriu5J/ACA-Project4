@@ -166,6 +166,30 @@ public class ReorderBuffer {
         System.out.println("Front Q: " + frontQ + "; Rear Q: " + rearQ);
     }
 
+    public boolean checkWAR(int reg, int tag) {
+        if (tag != 0) {
+            for (ROBEntry entry : buff) {
+                if (entry != null && entry.opcode == IssuedInst.INST_TYPE.STORE && (entry.destAddressRegValue + entry.storeOffset == reg)) {
+                    // Get the correct slot order so that it doesn't break
+                    if (rearQ > frontQ) {
+                        return (tag > entry.tag);
+                    } else {
+                        if (tag < entry.tag && tag <= rearQ)
+                            return true;
+                        else if (tag > entry.tag && tag >= frontQ && entry.tag >= frontQ)
+                            return true;
+                        else if (tag > entry.tag && tag <= rearQ)
+                            return true;
+                        else
+                            return false;
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
     public int getTagForReg(int regNum) {
         return (regs.getSlotForReg(regNum));
     }
