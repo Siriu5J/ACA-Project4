@@ -71,6 +71,11 @@ public class ReorderBuffer {
                 frontQ = 0;
                 rearQ = 0;
             } else {
+                if (retiree.getOpcode() == IssuedInst.INST_TYPE.JAL ||
+                retiree.getOpcode() == IssuedInst.INST_TYPE.JALR) {
+                    simulator.regs.setReg(31, retiree.getInstPC() + 4);
+                }
+
                 shouldAdvance = true;
             }
         }
