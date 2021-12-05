@@ -5,9 +5,9 @@ ADDI R10, R0, 12
 Label jump
 LW R3, 0(R1)
 LW R4, 0(R2)
-ADD R5, R3, R4
+ADD R5, R4, R3
 SW R5, 4(R2)
-BGEZ R5, jump
+BLTZ R5, jump
 ADD R1, R3, R2
 HALT
 

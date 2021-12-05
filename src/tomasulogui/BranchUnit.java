@@ -41,7 +41,7 @@ public class BranchUnit
         if(stations[station].data1Valid){
             if (stations[station].function == IssuedInst.INST_TYPE.BLTZ){
                 mispredictValid = true;
-                if(stations[station].data1 < stations[station].data2){
+                if(stations[station].data1 < 0){
                     return (stations[station].isPredictedTaken());
                 }
                 else{
@@ -50,7 +50,7 @@ public class BranchUnit
             }
             if (stations[station].function == IssuedInst.INST_TYPE.BLEZ){
                 mispredictValid = true;
-                if(stations[station].data1 <= stations[station].data2){
+                if(stations[station].data1 <= 0){
                     return (!stations[station].isPredictedTaken());
                 }
                 else{
@@ -59,7 +59,7 @@ public class BranchUnit
             }
             if (stations[station].function == IssuedInst.INST_TYPE.BGTZ){
                 mispredictValid = true;
-                if(stations[station].data1 > stations[station].data2){
+                if(stations[station].data1 > 0){
                     return (!stations[station].isPredictedTaken());
                 }
                 else{
@@ -68,7 +68,7 @@ public class BranchUnit
             }
             if (stations[station].function == IssuedInst.INST_TYPE.BGEZ){
                 mispredictValid = true;
-                if(stations[station].data1 >= stations[station].data2){
+                if(stations[station].data1 >= 0){
                     return (!stations[station].isPredictedTaken());
                 }
                 else{

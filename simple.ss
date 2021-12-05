@@ -1,0 +1,12 @@
+0:  ADDI R1, R0, 4000
+4:  ADDI R2, R0, 4004
+8:  ADDI R10, R0, 12
+Label jump
+12:  LW R3, 0(R1)
+16:  LW R4, 0(R2)
+20:  ADD R5, R4, R3
+24:  SW R5, 4(R2)
+28:  BLTZ R5, jump
+32:  ADD R1, R3, R2
+36:  HALT
+40:  
