@@ -5,6 +5,7 @@ public class BranchUnit
 
     public static final int EXEC_CYCLES = 1;
     public boolean mispredictValid = false;
+    public boolean mispredict = false;
     public boolean addressValid = false;
 
     public BranchUnit(PipelineSimulator sim) {
@@ -13,9 +14,7 @@ public class BranchUnit
 
     public boolean isMispredict(int station) {
         if (stations[station].function == IssuedInst.INST_TYPE.J ||
-            stations[station].function == IssuedInst.INST_TYPE.JR ||
-            stations[station].function == IssuedInst.INST_TYPE.JAL ||
-            stations[station].function == IssuedInst.INST_TYPE.JALR) {
+            stations[station].function == IssuedInst.INST_TYPE.JAL) {
             mispredictValid = true;
             return false;
         }
@@ -85,6 +84,8 @@ public class BranchUnit
             
             if(stations[station].data1Valid){
                 addressValid = true;
+                mispredict = true;
+                mispredictValid = true;
                 return stations[station].data1;
             }
             return 0;
@@ -95,7 +96,7 @@ public class BranchUnit
     
     public int calculateResult(int station) {
         // todo fill in
-        boolean mispredict = isMispredict(station);
+        mispredict = isMispredict(station);
         int addr = calculateAddress(station);
         if(mispredictValid && addressValid){
             simulator.reorder.buff[stations[station].robSlot].mispredicted = mispredict;
