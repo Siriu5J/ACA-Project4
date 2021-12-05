@@ -42,10 +42,10 @@ public class BranchUnit
             if (stations[station].function == IssuedInst.INST_TYPE.BLTZ){
                 mispredictValid = true;
                 if(stations[station].data1 < 0){
-                    return (stations[station].isPredictedTaken());
+                    return (!stations[station].isPredictedTaken());
                 }
                 else{
-                    return (!stations[station].isPredictedTaken());
+                    return (stations[station].isPredictedTaken());
                 }
             }
             if (stations[station].function == IssuedInst.INST_TYPE.BLEZ){

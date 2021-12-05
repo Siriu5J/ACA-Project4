@@ -1,6 +1,6 @@
 Begin Assembly
 Label jump
-ADDI R1, R0, 100
+ADDI R1, R0, -1
 BLTZ R1, jump
 ADD R1, R3, R2
 HALT
