@@ -255,6 +255,10 @@ public class IssueUnit {
                             issuee.regSrc2Valid = true;
                         }
                     }
+                    if (issuee.getOpcode() == IssuedInst.INST_TYPE.JAL ||
+                        issuee.getOpcode() == IssuedInst.INST_TYPE.JALR) {
+                        simulator.regs.setReg(31, issuee.getPC() + 4);
+                    }
                     simulator.branchUnit.acceptIssue(issuee);
                 }
                 else{

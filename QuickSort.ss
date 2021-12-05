@@ -18,7 +18,7 @@
       -- R20 is high-1 in partition
       -- R21 is partition return value (also the partitioning index(pi))
       -- R31 is the hardwares return address pointer
-0:  J PartitionTest
+0:  J QSTest
       ------------------------------------------
       -- Start quickSort
       ------------------------------------------
